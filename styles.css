@@ -92,7 +92,7 @@ select {
 
 .eyebrow {
   margin: 0 0 10px;
-  color: rgba(255, 255, 255, 0.78);
+  color: #fff;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0;
@@ -139,7 +139,7 @@ h3 {
 .hero__copy p:last-child {
   max-width: 640px;
   margin: 14px 0 0;
-  color: rgba(255, 255, 255, 0.9);
+  color: #fff;
   font-size: clamp(0.92rem, 3vw, 1rem);
 }
 
