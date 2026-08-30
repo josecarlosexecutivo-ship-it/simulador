@@ -1,4 +1,6 @@
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const test = require('node:test');
 
 const simulator = require('../script.js');
@@ -80,25 +82,14 @@ test('explains monthly sales as quantity times typed value', () => {
   assert.equal(simulator.necessaryMonthlyValueLabel(result), 'R$ 7.750,00');
 });
 
-test('builds a compact mobile summary so the result stays visible while scrolling', () => {
-  const line = simulator.calculateScenario({
-    targetMonthly: 100000,
-    years: 5,
-    ticket: 250,
-    policy: { label: 'Individual', firstPct: 1.5, recurringPct: 0.22 }
-  });
-  const result = {
-    lines: [line],
-    monthlySales: line.monthlySales,
-    monthlySalesGoal: line.monthlySalesGoal,
-    practicalMonthlyPremium: line.practicalMonthlyPremium
-  };
+test('does not put the mobile result in a floating overlay', () => {
+  const root = path.join(__dirname, '..');
+  const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const styles = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 
-  assert.deepEqual(simulator.mobileSummaryValues(result), {
-    sales: '31 vendas',
-    hint: '31 de R$ 250,00 por mês',
-    value: 'R$ 7.750,00'
-  });
+  assert.equal(index.includes('mobile-summary'), false);
+  assert.equal(styles.includes('mobile-summary'), false);
+  assert.equal(/position:\s*fixed/.test(styles), false);
 });
 
 test('calculates recurring wallet without adding upfront commission', () => {

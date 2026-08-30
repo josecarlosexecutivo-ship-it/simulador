@@ -230,8 +230,7 @@
     formatPracticalSales,
     currentTicketLabel,
     monthlySalesHint,
-    necessaryMonthlyValueLabel,
-    mobileSummaryValues
+    necessaryMonthlyValueLabel
   };
 
   if (typeof module !== "undefined" && module.exports) {
@@ -264,10 +263,7 @@
     monthlyPremium: documentRef.getElementById("metricMonthlyPremium"),
     recurring: documentRef.getElementById("metricRecurring"),
     lineCards: documentRef.getElementById("lineCards"),
-    table: documentRef.getElementById("resultsTable"),
-    mobileSales: documentRef.getElementById("mobileSummarySales"),
-    mobileHint: documentRef.getElementById("mobileSummaryHint"),
-    mobileValue: documentRef.getElementById("mobileSummaryValue")
+    table: documentRef.getElementById("resultsTable")
   };
 
   function fillSelect(select, options, selectedCode) {
@@ -472,14 +468,6 @@
     return formatCurrency(result.practicalMonthlyPremium);
   }
 
-  function mobileSummaryValues(result) {
-    return {
-      sales: formatPracticalSales(result.monthlySales),
-      hint: monthlySalesHint(result),
-      value: necessaryMonthlyValueLabel(result)
-    };
-  }
-
   function makeLineCard(line) {
     const article = documentRef.createElement("article");
     article.className = "line-card";
@@ -526,7 +514,6 @@
       percentage(line.policy.recurringPct),
       line.policy.carteiraOnly ? "Somente carteira" : percentage(line.policy.firstPct),
       formatPracticalSales(line.monthlySales),
-      formatQuantity(line.monthlySales),
       formatQuantity(line.totalSales),
       formatCurrency(line.recurringAtEnd)
     ].forEach((value) => {
@@ -560,11 +547,6 @@
     output.monthlySalesHint.textContent = monthlySalesHint(result);
     output.monthlyPremium.textContent = necessaryMonthlyValueLabel(result);
     output.recurring.textContent = formatCurrency(result.recurringAtEnd);
-
-    const mobile = mobileSummaryValues(result);
-    output.mobileSales.textContent = mobile.sales;
-    output.mobileHint.textContent = mobile.hint;
-    output.mobileValue.textContent = mobile.value;
 
     output.lineCards.textContent = "";
     result.lines.forEach((line) => output.lineCards.appendChild(makeLineCard(line)));
