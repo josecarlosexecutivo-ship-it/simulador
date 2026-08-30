@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulador de Carteira | Alfaiate do Seguro + MAG Seguros</title>
+  <meta name="description" content="Simulador de carteira recorrente para linhas Individual, Premio Nivelado, Empresarial e Misto.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Titillium+Web:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__inner">
+      <div class="brand-strip" aria-label="Assessoria Alfaiate do Seguro em parceria com MAG Seguros">
+        <img class="brand-strip__logo brand-strip__logo--alfaiate" src="assets/logo-alfaiate-a-branca.png" alt="Assessoria Alfaiate do Seguro">
+        <span class="brand-strip__divider" aria-hidden="true"></span>
+        <img class="brand-strip__logo brand-strip__logo--mag" src="assets/logo-mag-branca.png" alt="MAG Seguros">
+      </div>
+      <div class="hero__copy">
+        <p class="eyebrow">Assessoria Alfaiate do Seguro em parceria com MAG Seguros</p>
+        <h1>Simulador de Carteira</h1>
+        <p>Calcule a producao mensal necessaria para atingir a renda recorrente desejada, sem somar agenciamento inicial a carteira.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="panel simulator-panel" aria-labelledby="simulator-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow eyebrow--dark">Planejamento de producao</p>
+          <h2 id="simulator-title">Dados do simulador</h2>
+        </div>
+        <span class="status-pill" id="summary-pill">Carteira recorrente</span>
+      </div>
+
+      <form id="simulator-form" class="form-grid" autocomplete="off">
+        <label class="field span-2" for="scenario">
+          <span>Cenario</span>
+          <select id="scenario" name="scenario">
+            <option value="individual">Individual</option>
+            <option value="nivelado">Premio Nivelado</option>
+            <option value="empresarial">Empresarial</option>
+            <option value="misto">Misto</option>
+          </select>
+        </label>
+
+        <label class="field" for="targetMonthly">
+          <span>Quanto deseja receber por mes de carteira</span>
+          <input id="targetMonthly" class="money-input" inputmode="numeric" type="text" value="R$ 100.000,00" data-value="100000">
+        </label>
+
+        <label class="field" for="years">
+          <span>Em quantos anos deseja atingir</span>
+          <input id="years" type="number" inputmode="numeric" min="1" max="40" step="1" value="5">
+        </label>
+
+        <label class="field" for="ticketIndividual">
+          <span>Ticket medio Individual</span>
+          <input id="ticketIndividual" class="money-input" inputmode="numeric" type="text" value="R$ 1.500,00" data-value="1500">
+        </label>
+
+        <label class="field" for="ticketNivelado">
+          <span>Ticket medio Premio Nivelado</span>
+          <input id="ticketNivelado" class="money-input" inputmode="numeric" type="text" value="R$ 2.500,00" data-value="2500">
+        </label>
+
+        <label class="field" for="ticketEmpresarial">
+          <span>Ticket medio Empresarial</span>
+          <input id="ticketEmpresarial" class="money-input" inputmode="numeric" type="text" value="R$ 3.000,00" data-value="3000">
+        </label>
+
+        <label class="field scenario-field" data-scenarios="nivelado misto" for="niveladoPrazo">
+          <span>Prazo Premio Nivelado</span>
+          <select id="niveladoPrazo">
+            <option value="10">10 anos</option>
+            <option value="15">15 anos</option>
+            <option value="20" selected>20/25 anos</option>
+            <option value="30">30 anos / vitalicio</option>
+          </select>
+        </label>
+
+        <label class="field scenario-field" data-scenarios="nivelado misto" for="niveladoPolicy">
+          <span>Politica Premio Nivelado</span>
+          <select id="niveladoPolicy"></select>
+        </label>
+
+        <label class="field scenario-field" data-scenarios="empresarial misto" for="empresarialPolicy">
+          <span>Politica Vida em Grupo</span>
+          <select id="empresarialPolicy"></select>
+        </label>
+      </form>
+    </section>
+
+    <section class="results-grid" aria-label="Resultados do simulador">
+      <article class="metric-card metric-card--primary">
+        <span class="metric-card__label">Vendas mensais estimadas</span>
+        <strong id="metricMonthlySales">0</strong>
+        <small id="metricMonthlySalesHint">apolices ou contratos por mes</small>
+      </article>
+      <article class="metric-card">
+        <span class="metric-card__label">Volume mensal de premio</span>
+        <strong id="metricMonthlyPremium">R$ 0,00</strong>
+        <small>baseado nos tickets informados</small>
+      </article>
+      <article class="metric-card">
+        <span class="metric-card__label">Carteira recorrente ao final</span>
+        <strong id="metricRecurring">R$ 0,00</strong>
+        <small>sem somar agenciamento</small>
+      </article>
+    </section>
+
+    <section class="panel" aria-labelledby="details-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow eyebrow--dark">Detalhamento</p>
+          <h2 id="details-title">Quanto vender em cada linha</h2>
+        </div>
+      </div>
+
+      <div id="lineCards" class="line-cards"></div>
+
+      <div class="table-frame" role="region" aria-label="Tabela de resultados" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th>Linha</th>
+              <th>Meta mensal</th>
+              <th>Ticket medio</th>
+              <th>Comissao recorrente</th>
+              <th>Agenciamento</th>
+              <th>Vendas por mes</th>
+              <th>Total no periodo</th>
+              <th>Carteira final</th>
+            </tr>
+          </thead>
+          <tbody id="resultsTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel note-panel" aria-label="Regras aplicadas">
+      <h2>Regras aplicadas</h2>
+      <p>Individual/Tradicional: 150% de agenciamento e 22% de comissao recorrente.</p>
+      <p>Premio Nivelado: usa as opcoes de prazo e politica de comissao da tabela do projeto.</p>
+      <p>Empresarial: Global e PME usam a politica de Vida em Grupo. A partir da opcao 8, a tabela considera somente carteira.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
