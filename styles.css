@@ -105,6 +105,10 @@ select {
   color: var(--mag-blue);
 }
 
+.hero .eyebrow {
+  text-transform: none;
+}
+
 h1,
 h2,
 h3 {
