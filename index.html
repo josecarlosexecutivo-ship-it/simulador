@@ -59,17 +59,17 @@
 
         <label class="field" for="ticketIndividual">
           <span>Valor medio por venda Individual</span>
-          <input id="ticketIndividual" class="money-input" inputmode="numeric" type="text" value="R$ 1.500,00" data-value="1500">
+          <input id="ticketIndividual" class="money-input" inputmode="numeric" type="text" placeholder="Digite o valor">
         </label>
 
         <label class="field" for="ticketNivelado">
           <span>Valor medio por venda Premio Nivelado</span>
-          <input id="ticketNivelado" class="money-input" inputmode="numeric" type="text" value="R$ 2.500,00" data-value="2500">
+          <input id="ticketNivelado" class="money-input" inputmode="numeric" type="text" placeholder="Digite o valor">
         </label>
 
         <label class="field" for="ticketEmpresarial">
           <span>Valor medio por venda Empresarial</span>
-          <input id="ticketEmpresarial" class="money-input" inputmode="numeric" type="text" value="R$ 3.000,00" data-value="3000">
+          <input id="ticketEmpresarial" class="money-input" inputmode="numeric" type="text" placeholder="Digite o valor">
         </label>
 
         <label class="field scenario-field" data-scenarios="nivelado misto" for="niveladoPrazo">
@@ -96,14 +96,14 @@
 
     <section class="results-grid" aria-label="Resultados do simulador">
       <article class="metric-card metric-card--primary">
-        <span class="metric-card__label">Vender todo mes</span>
-        <strong id="metricMonthlySales">0</strong>
-        <small id="metricMonthlySalesHint">meta pratica mensal</small>
+        <span class="metric-card__label">Quantas vendas por mes</span>
+        <strong id="metricMonthlySales">Digite o valor</strong>
+        <small id="metricMonthlySalesHint">conforme o valor medio informado</small>
       </article>
       <article class="metric-card">
-        <span class="metric-card__label">Premio medio por venda</span>
-        <strong id="metricMonthlyPremium">R$ 0,00</strong>
-        <small>igual ao valor medio informado</small>
+        <span class="metric-card__label">Valor necessario no mes</span>
+        <strong id="metricMonthlyPremium">Digite o valor</strong>
+        <small>soma das vendas do mes</small>
       </article>
       <article class="metric-card">
         <span class="metric-card__label">Carteira recorrente ao final</span>

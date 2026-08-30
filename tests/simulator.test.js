@@ -42,10 +42,42 @@ test('keeps currency mask stable while typing and deleting digits', () => {
 });
 
 test('shows a practical monthly sales goal instead of fractional selling', () => {
+  assert.equal(simulator.formatPracticalSales(0), 'Digite o valor');
   assert.equal(simulator.practicalMonthlySales(0.52), 1);
   assert.equal(simulator.formatPracticalSales(0.52), '1 venda');
   assert.equal(simulator.practicalMonthlySales(5.05), 6);
   assert.equal(simulator.formatPracticalSales(5.05), '6 vendas');
+});
+
+test('does not calculate sales before the average sale value is filled', () => {
+  const result = simulator.calculateScenario({
+    targetMonthly: 100000,
+    years: 5,
+    ticket: 0,
+    policy: { label: 'Individual', firstPct: 1.5, recurringPct: 0.22 }
+  });
+
+  assert.equal(result.missingTicket, true);
+  assert.equal(result.monthlySalesGoal, 0);
+  assert.equal(simulator.currentTicketLabel({ lines: [result] }), 'Em branco');
+  assert.equal(simulator.necessaryMonthlyValueLabel({ monthlySalesGoal: 0 }), 'Digite o valor');
+});
+
+test('explains monthly sales as quantity times typed value', () => {
+  const line = simulator.calculateScenario({
+    targetMonthly: 100000,
+    years: 5,
+    ticket: 250,
+    policy: { label: 'Individual', firstPct: 1.5, recurringPct: 0.22 }
+  });
+  const result = {
+    lines: [line],
+    monthlySalesGoal: line.monthlySalesGoal,
+    practicalMonthlyPremium: line.practicalMonthlyPremium
+  };
+
+  assert.equal(simulator.monthlySalesHint(result), '31 de R$ 250,00 por mes');
+  assert.equal(simulator.necessaryMonthlyValueLabel(result), 'R$ 7.750,00');
 });
 
 test('calculates recurring wallet without adding upfront commission', () => {

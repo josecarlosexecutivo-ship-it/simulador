@@ -113,14 +113,38 @@
 
   function formatPracticalSales(value) {
     const sales = practicalMonthlySales(value);
+    if (!sales) {
+      return "Digite o valor";
+    }
     return `${sales} ${sales === 1 ? "venda" : "vendas"}`;
   }
 
   function calculateScenario({ targetMonthly, years, ticket, policy, name }) {
     const months = Math.max(1, Math.round(clampPositive(years, 1) * 12));
     const safeTarget = clampPositive(targetMonthly, 0);
-    const safeTicket = clampPositive(ticket, 1);
+    const safeTicket = clampPositive(ticket, 0);
     const recurringPct = clampPositive(policy.recurringPct, 0);
+    const isReady = safeTarget > 0 && safeTicket > 0 && recurringPct > 0;
+    if (!isReady) {
+      return {
+        name: name || policy.label,
+        targetMonthly: safeTarget,
+        years: clampPositive(years, 1),
+        months,
+        ticket: safeTicket,
+        policy,
+        activeMonths: months,
+        monthlySales: 0,
+        monthlySalesGoal: 0,
+        totalSales: 0,
+        monthlyPremium: 0,
+        practicalMonthlyPremium: 0,
+        recurringAtEnd: 0,
+        monthlyUpfrontEstimate: 0,
+        walletIncludesUpfront: false,
+        missingTicket: safeTicket <= 0
+      };
+    }
     const activeMonths = Math.max(1, months - (policy.delayMonths || 0));
     const monthlySales = safeTarget / (safeTicket * recurringPct * activeMonths);
     const monthlySalesGoal = practicalMonthlySales(monthlySales);
@@ -204,7 +228,9 @@
     nextMoneyDigits,
     practicalMonthlySales,
     formatPracticalSales,
-    currentTicketLabel
+    currentTicketLabel,
+    monthlySalesHint,
+    necessaryMonthlyValueLabel
   };
 
   if (typeof module !== "undefined" && module.exports) {
@@ -286,6 +312,12 @@
 
   function setMoneyFromDigits(input, digits) {
     const normalizedDigits = String(digits || "").replace(/\D/g, "").replace(/^0+(?=\d)/, "");
+    if (!normalizedDigits) {
+      input.dataset.digits = "";
+      input.dataset.value = "";
+      input.value = "";
+      return;
+    }
     const value = normalizedDigits ? Number(normalizedDigits) : 0;
     input.dataset.digits = normalizedDigits;
     input.dataset.value = String(value);
@@ -416,7 +448,24 @@
     if (result.lines.length !== 1) {
       return "Ver linhas";
     }
+    if (!result.lines[0].ticket) {
+      return "Em branco";
+    }
     return formatCurrency(result.lines[0].ticket);
+  }
+
+  function monthlySalesHint(result) {
+    if (result.lines.length !== 1 || !result.lines[0].ticket || !result.monthlySalesGoal) {
+      return result.monthlySalesGoal ? "vendas somadas todo mes" : "preencha o valor medio por venda";
+    }
+    return `${result.monthlySalesGoal} de ${formatCurrency(result.lines[0].ticket)} por mes`;
+  }
+
+  function necessaryMonthlyValueLabel(result) {
+    if (!result.monthlySalesGoal) {
+      return "Digite o valor";
+    }
+    return formatCurrency(result.practicalMonthlyPremium);
   }
 
   function makeLineCard(line) {
@@ -439,7 +488,8 @@
     [
       ["Meta da linha", formatCurrency(line.targetMonthly)],
       ["Venda mensal", formatPracticalSales(line.monthlySales)],
-      ["Producao nova", formatCurrency(line.practicalMonthlyPremium)],
+      ["Valor medio", line.ticket ? formatCurrency(line.ticket) : "Em branco"],
+      ["Total no mes", line.monthlySalesGoal ? formatCurrency(line.practicalMonthlyPremium) : "Digite o valor"],
       ["Carteira final", formatCurrency(line.recurringAtEnd)]
     ].forEach(([label, value]) => {
       const wrapper = documentRef.createElement("div");
@@ -460,7 +510,7 @@
     [
       line.name,
       formatCurrency(line.targetMonthly),
-      formatCurrency(line.ticket),
+      line.ticket ? formatCurrency(line.ticket) : "Em branco",
       percentage(line.policy.recurringPct),
       line.policy.carteiraOnly ? "Somente carteira" : percentage(line.policy.firstPct),
       formatPracticalSales(line.monthlySales),
@@ -495,8 +545,8 @@
 
     output.summaryPill.textContent = `${label} recorrente`;
     output.monthlySales.textContent = formatPracticalSales(result.monthlySales);
-    output.monthlySalesHint.textContent = result.lines.length > 1 ? "vendas somadas todo mes" : "meta minima todo mes";
-    output.monthlyPremium.textContent = currentTicketLabel(result);
+    output.monthlySalesHint.textContent = monthlySalesHint(result);
+    output.monthlyPremium.textContent = necessaryMonthlyValueLabel(result);
     output.recurring.textContent = formatCurrency(result.recurringAtEnd);
 
     output.lineCards.textContent = "";
