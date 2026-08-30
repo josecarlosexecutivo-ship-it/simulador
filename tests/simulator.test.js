@@ -41,6 +41,13 @@ test('keeps currency mask stable while typing and deleting digits', () => {
   assert.equal(simulator.formatCurrency(Number(digits)), 'R$ 150,00');
 });
 
+test('shows a practical monthly sales goal instead of fractional selling', () => {
+  assert.equal(simulator.practicalMonthlySales(0.52), 1);
+  assert.equal(simulator.formatPracticalSales(0.52), '1 venda');
+  assert.equal(simulator.practicalMonthlySales(5.05), 6);
+  assert.equal(simulator.formatPracticalSales(5.05), '6 vendas');
+});
+
 test('calculates recurring wallet without adding upfront commission', () => {
   const result = simulator.calculateScenario({
     targetMonthly: 100000,
@@ -53,6 +60,7 @@ test('calculates recurring wallet without adding upfront commission', () => {
   near(result.totalSales, 303.030303);
   near(result.recurringAtEnd, 100000);
   near(result.monthlyUpfrontEstimate, 11363.64);
+  assert.equal(simulator.currentTicketLabel({ lines: [result] }), 'R$ 1.500,00');
   assert.equal(result.walletIncludesUpfront, false);
 });
 

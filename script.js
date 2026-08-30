@@ -103,6 +103,19 @@
     }).format(Number.isFinite(value) ? value : 0);
   }
 
+  function practicalMonthlySales(value) {
+    const number = Number(value);
+    if (!Number.isFinite(number) || number <= 0) {
+      return 0;
+    }
+    return Math.max(1, Math.ceil(number));
+  }
+
+  function formatPracticalSales(value) {
+    const sales = practicalMonthlySales(value);
+    return `${sales} ${sales === 1 ? "venda" : "vendas"}`;
+  }
+
   function calculateScenario({ targetMonthly, years, ticket, policy, name }) {
     const months = Math.max(1, Math.round(clampPositive(years, 1) * 12));
     const safeTarget = clampPositive(targetMonthly, 0);
@@ -110,8 +123,10 @@
     const recurringPct = clampPositive(policy.recurringPct, 0);
     const activeMonths = Math.max(1, months - (policy.delayMonths || 0));
     const monthlySales = safeTarget / (safeTicket * recurringPct * activeMonths);
+    const monthlySalesGoal = practicalMonthlySales(monthlySales);
     const totalSales = monthlySales * months;
     const monthlyPremium = monthlySales * safeTicket;
+    const practicalMonthlyPremium = monthlySalesGoal * safeTicket;
     const recurringAtEnd = monthlySales * safeTicket * recurringPct * activeMonths;
     const monthlyUpfrontEstimate = monthlySales * safeTicket * (Number(policy.firstPct) || 0);
 
@@ -124,8 +139,10 @@
       policy,
       activeMonths,
       monthlySales,
+      monthlySalesGoal,
       totalSales,
       monthlyPremium,
+      practicalMonthlyPremium,
       recurringAtEnd,
       monthlyUpfrontEstimate,
       walletIncludesUpfront: false
@@ -165,8 +182,10 @@
     return {
       lines,
       monthlySales: lines.reduce((sum, item) => sum + item.monthlySales, 0),
+      monthlySalesGoal: lines.reduce((sum, item) => sum + item.monthlySalesGoal, 0),
       totalSales: lines.reduce((sum, item) => sum + item.totalSales, 0),
       monthlyPremium: lines.reduce((sum, item) => sum + item.monthlyPremium, 0),
+      practicalMonthlyPremium: lines.reduce((sum, item) => sum + item.practicalMonthlyPremium, 0),
       monthlyUpfrontEstimate: lines.reduce((sum, item) => sum + item.monthlyUpfrontEstimate, 0),
       recurringAtEnd: lines.reduce((sum, item) => sum + item.recurringAtEnd, 0),
       walletIncludesUpfront: false
@@ -182,7 +201,10 @@
     formatCurrency,
     parseCurrencyToNumber,
     normalizeCurrencyInputText,
-    nextMoneyDigits
+    nextMoneyDigits,
+    practicalMonthlySales,
+    formatPracticalSales,
+    currentTicketLabel
   };
 
   if (typeof module !== "undefined" && module.exports) {
@@ -390,6 +412,13 @@
     ]);
   }
 
+  function currentTicketLabel(result) {
+    if (result.lines.length !== 1) {
+      return "Ver linhas";
+    }
+    return formatCurrency(result.lines[0].ticket);
+  }
+
   function makeLineCard(line) {
     const article = documentRef.createElement("article");
     article.className = "line-card";
@@ -409,8 +438,8 @@
     const list = documentRef.createElement("dl");
     [
       ["Meta da linha", formatCurrency(line.targetMonthly)],
-      ["Vendas por mes", formatQuantity(line.monthlySales)],
-      ["Premio mensal", formatCurrency(line.monthlyPremium)],
+      ["Venda mensal", formatPracticalSales(line.monthlySales)],
+      ["Producao nova", formatCurrency(line.practicalMonthlyPremium)],
       ["Carteira final", formatCurrency(line.recurringAtEnd)]
     ].forEach(([label, value]) => {
       const wrapper = documentRef.createElement("div");
@@ -434,6 +463,7 @@
       formatCurrency(line.ticket),
       percentage(line.policy.recurringPct),
       line.policy.carteiraOnly ? "Somente carteira" : percentage(line.policy.firstPct),
+      formatPracticalSales(line.monthlySales),
       formatQuantity(line.monthlySales),
       formatQuantity(line.totalSales),
       formatCurrency(line.recurringAtEnd)
@@ -464,9 +494,9 @@
     const label = scenarioLabels[fields.scenario.value] || "Carteira";
 
     output.summaryPill.textContent = `${label} recorrente`;
-    output.monthlySales.textContent = formatQuantity(result.monthlySales);
-    output.monthlySalesHint.textContent = result.lines.length > 1 ? "vendas somadas por mes" : "apolices ou contratos por mes";
-    output.monthlyPremium.textContent = formatCurrency(result.monthlyPremium);
+    output.monthlySales.textContent = formatPracticalSales(result.monthlySales);
+    output.monthlySalesHint.textContent = result.lines.length > 1 ? "vendas somadas todo mes" : "meta minima todo mes";
+    output.monthlyPremium.textContent = currentTicketLabel(result);
     output.recurring.textContent = formatCurrency(result.recurringAtEnd);
 
     output.lineCards.textContent = "";

@@ -58,17 +58,17 @@
         </label>
 
         <label class="field" for="ticketIndividual">
-          <span>Ticket medio Individual</span>
+          <span>Valor medio por venda Individual</span>
           <input id="ticketIndividual" class="money-input" inputmode="numeric" type="text" value="R$ 1.500,00" data-value="1500">
         </label>
 
         <label class="field" for="ticketNivelado">
-          <span>Ticket medio Premio Nivelado</span>
+          <span>Valor medio por venda Premio Nivelado</span>
           <input id="ticketNivelado" class="money-input" inputmode="numeric" type="text" value="R$ 2.500,00" data-value="2500">
         </label>
 
         <label class="field" for="ticketEmpresarial">
-          <span>Ticket medio Empresarial</span>
+          <span>Valor medio por venda Empresarial</span>
           <input id="ticketEmpresarial" class="money-input" inputmode="numeric" type="text" value="R$ 3.000,00" data-value="3000">
         </label>
 
@@ -96,14 +96,14 @@
 
     <section class="results-grid" aria-label="Resultados do simulador">
       <article class="metric-card metric-card--primary">
-        <span class="metric-card__label">Vendas mensais estimadas</span>
+        <span class="metric-card__label">Vender todo mes</span>
         <strong id="metricMonthlySales">0</strong>
-        <small id="metricMonthlySalesHint">apolices ou contratos por mes</small>
+        <small id="metricMonthlySalesHint">meta pratica mensal</small>
       </article>
       <article class="metric-card">
-        <span class="metric-card__label">Volume mensal de premio</span>
+        <span class="metric-card__label">Premio medio por venda</span>
         <strong id="metricMonthlyPremium">R$ 0,00</strong>
-        <small>baseado nos tickets informados</small>
+        <small>igual ao valor medio informado</small>
       </article>
       <article class="metric-card">
         <span class="metric-card__label">Carteira recorrente ao final</span>
@@ -128,10 +128,11 @@
             <tr>
               <th>Linha</th>
               <th>Meta mensal</th>
-              <th>Ticket medio</th>
+              <th>Valor por venda</th>
               <th>Comissao recorrente</th>
               <th>Agenciamento</th>
-              <th>Vendas por mes</th>
+              <th>Venda mensal</th>
+              <th>Media tecnica</th>
               <th>Total no periodo</th>
               <th>Carteira final</th>
             </tr>
