@@ -20,34 +20,34 @@
     { code: "20-a", prazo: "20", label: "20/25 - A", firstPct: 0, recurringPct: 0.2, delayMonths: 0 },
     { code: "20-b", prazo: "20", label: "20/25 - B", firstPct: 1, recurringPct: 0.2, delayMonths: 1 },
     { code: "20-c", prazo: "20", label: "20/25 - C", firstPct: 2, recurringPct: 0.2, delayMonths: 2 },
-    { code: "30-a", prazo: "30", label: "30/Vitalicio - A", firstPct: 0, recurringPct: 0.3, delayMonths: 0 },
-    { code: "30-b", prazo: "30", label: "30/Vitalicio - B", firstPct: 1, recurringPct: 0.3, delayMonths: 1 },
+    { code: "30-a", prazo: "30", label: "30/Vitalício - A", firstPct: 0, recurringPct: 0.3, delayMonths: 0 },
+    { code: "30-b", prazo: "30", label: "30/Vitalício - B", firstPct: 1, recurringPct: 0.3, delayMonths: 1 },
     { code: "35-a", prazo: "30", label: "35 - A", firstPct: 0, recurringPct: 0.35, delayMonths: 0 },
     { code: "35-b", prazo: "30", label: "35 - B", firstPct: 1, recurringPct: 0.35, delayMonths: 1 },
     { code: "40-a", prazo: "30", label: "40 - A", firstPct: 0, recurringPct: 0.4, delayMonths: 0 }
   ];
 
   const EMPRESARIAL_POLICIES = [
-    { code: "1", label: "Opcao 1 - 125% / 40%", firstPct: 1.25, recurringPct: 0.4, factor: 1 },
-    { code: "2", label: "Opcao 2 - 125% / 35%", firstPct: 1.25, recurringPct: 0.35, factor: 0.9 },
-    { code: "3", label: "Opcao 3 - 125% / 30%", firstPct: 1.25, recurringPct: 0.3, factor: 0.82 },
-    { code: "4", label: "Opcao 4 - 125% / 25%", firstPct: 1.25, recurringPct: 0.25, factor: 0.75 },
-    { code: "5", label: "Opcao 5 - 125% / 20%", firstPct: 1.25, recurringPct: 0.2, factor: 0.69 },
-    { code: "6", label: "Opcao 6 - 125% / 15%", firstPct: 1.25, recurringPct: 0.15, factor: 0.65 },
-    { code: "7", label: "Opcao 7 - 125% / 10%", firstPct: 1.25, recurringPct: 0.1, factor: 0.6 },
-    { code: "8", label: "Opcao 8 - 40% / 40%", firstPct: 0.4, recurringPct: 0.4, factor: 0.85, carteiraOnly: true },
-    { code: "9", label: "Opcao 9 - 35% / 35%", firstPct: 0.35, recurringPct: 0.35, factor: 0.78, carteiraOnly: true },
-    { code: "10", label: "Opcao 10 - 30% / 30%", firstPct: 0.3, recurringPct: 0.3, factor: 0.71, carteiraOnly: true },
-    { code: "11", label: "Opcao 11 - 25% / 25%", firstPct: 0.25, recurringPct: 0.25, factor: 0.65, carteiraOnly: true },
-    { code: "12", label: "Opcao 12 - 20% / 20%", firstPct: 0.2, recurringPct: 0.2, factor: 0.61, carteiraOnly: true },
-    { code: "13", label: "Opcao 13 - 15% / 15%", firstPct: 0.15, recurringPct: 0.15, factor: 0.56, carteiraOnly: true },
-    { code: "14", label: "Opcao 14 - 10% / 10%", firstPct: 0.1, recurringPct: 0.1, factor: 0.53, carteiraOnly: true },
-    { code: "15", label: "Opcao 15 - 5% / 5%", firstPct: 0.05, recurringPct: 0.05, factor: 0.5, carteiraOnly: true }
+    { code: "1", label: "Opção 1 - 125% / 40%", firstPct: 1.25, recurringPct: 0.4, factor: 1 },
+    { code: "2", label: "Opção 2 - 125% / 35%", firstPct: 1.25, recurringPct: 0.35, factor: 0.9 },
+    { code: "3", label: "Opção 3 - 125% / 30%", firstPct: 1.25, recurringPct: 0.3, factor: 0.82 },
+    { code: "4", label: "Opção 4 - 125% / 25%", firstPct: 1.25, recurringPct: 0.25, factor: 0.75 },
+    { code: "5", label: "Opção 5 - 125% / 20%", firstPct: 1.25, recurringPct: 0.2, factor: 0.69 },
+    { code: "6", label: "Opção 6 - 125% / 15%", firstPct: 1.25, recurringPct: 0.15, factor: 0.65 },
+    { code: "7", label: "Opção 7 - 125% / 10%", firstPct: 1.25, recurringPct: 0.1, factor: 0.6 },
+    { code: "8", label: "Opção 8 - 40% / 40%", firstPct: 0.4, recurringPct: 0.4, factor: 0.85, carteiraOnly: true },
+    { code: "9", label: "Opção 9 - 35% / 35%", firstPct: 0.35, recurringPct: 0.35, factor: 0.78, carteiraOnly: true },
+    { code: "10", label: "Opção 10 - 30% / 30%", firstPct: 0.3, recurringPct: 0.3, factor: 0.71, carteiraOnly: true },
+    { code: "11", label: "Opção 11 - 25% / 25%", firstPct: 0.25, recurringPct: 0.25, factor: 0.65, carteiraOnly: true },
+    { code: "12", label: "Opção 12 - 20% / 20%", firstPct: 0.2, recurringPct: 0.2, factor: 0.61, carteiraOnly: true },
+    { code: "13", label: "Opção 13 - 15% / 15%", firstPct: 0.15, recurringPct: 0.15, factor: 0.56, carteiraOnly: true },
+    { code: "14", label: "Opção 14 - 10% / 10%", firstPct: 0.1, recurringPct: 0.1, factor: 0.53, carteiraOnly: true },
+    { code: "15", label: "Opção 15 - 5% / 5%", firstPct: 0.05, recurringPct: 0.05, factor: 0.5, carteiraOnly: true }
   ];
 
   const scenarioLabels = {
     individual: "Individual",
-    nivelado: "Premio Nivelado",
+    nivelado: "Prêmio Nivelado",
     empresarial: "Empresarial",
     misto: "Misto"
   };
@@ -188,7 +188,7 @@
         years,
         ticket: tickets.nivelado,
         policy: policies.nivelado,
-        name: "Premio Nivelado"
+        name: "Prêmio Nivelado"
       }),
       calculateScenario({
         targetMonthly: lineTarget,
@@ -230,7 +230,8 @@
     formatPracticalSales,
     currentTicketLabel,
     monthlySalesHint,
-    necessaryMonthlyValueLabel
+    necessaryMonthlyValueLabel,
+    mobileSummaryValues
   };
 
   if (typeof module !== "undefined" && module.exports) {
@@ -263,7 +264,10 @@
     monthlyPremium: documentRef.getElementById("metricMonthlyPremium"),
     recurring: documentRef.getElementById("metricRecurring"),
     lineCards: documentRef.getElementById("lineCards"),
-    table: documentRef.getElementById("resultsTable")
+    table: documentRef.getElementById("resultsTable"),
+    mobileSales: documentRef.getElementById("mobileSummarySales"),
+    mobileHint: documentRef.getElementById("mobileSummaryHint"),
+    mobileValue: documentRef.getElementById("mobileSummaryValue")
   };
 
   function fillSelect(select, options, selectedCode) {
@@ -429,7 +433,7 @@
 
     const singleConfig = {
       individual: { ticket: tickets.individual, policy: policies.individual, name: "Individual" },
-      nivelado: { ticket: tickets.nivelado, policy: policies.nivelado, name: "Premio Nivelado" },
+      nivelado: { ticket: tickets.nivelado, policy: policies.nivelado, name: "Prêmio Nivelado" },
       empresarial: { ticket: tickets.empresarial, policy: policies.empresarial, name: "Empresarial" }
     }[scenario];
 
@@ -456,9 +460,9 @@
 
   function monthlySalesHint(result) {
     if (result.lines.length !== 1 || !result.lines[0].ticket || !result.monthlySalesGoal) {
-      return result.monthlySalesGoal ? "vendas somadas todo mes" : "preencha o valor medio por venda";
+      return result.monthlySalesGoal ? "vendas somadas todo mês" : "preencha o valor médio por venda";
     }
-    return `${result.monthlySalesGoal} de ${formatCurrency(result.lines[0].ticket)} por mes`;
+    return `${result.monthlySalesGoal} de ${formatCurrency(result.lines[0].ticket)} por mês`;
   }
 
   function necessaryMonthlyValueLabel(result) {
@@ -466,6 +470,14 @@
       return "Digite o valor";
     }
     return formatCurrency(result.practicalMonthlyPremium);
+  }
+
+  function mobileSummaryValues(result) {
+    return {
+      sales: formatPracticalSales(result.monthlySales),
+      hint: monthlySalesHint(result),
+      value: necessaryMonthlyValueLabel(result)
+    };
   }
 
   function makeLineCard(line) {
@@ -488,8 +500,8 @@
     [
       ["Meta da linha", formatCurrency(line.targetMonthly)],
       ["Venda mensal", formatPracticalSales(line.monthlySales)],
-      ["Valor medio", line.ticket ? formatCurrency(line.ticket) : "Em branco"],
-      ["Total no mes", line.monthlySalesGoal ? formatCurrency(line.practicalMonthlyPremium) : "Digite o valor"],
+      ["Valor médio", line.ticket ? formatCurrency(line.ticket) : "Em branco"],
+      ["Total no mês", line.monthlySalesGoal ? formatCurrency(line.practicalMonthlyPremium) : "Digite o valor"],
       ["Carteira final", formatCurrency(line.recurringAtEnd)]
     ].forEach(([label, value]) => {
       const wrapper = documentRef.createElement("div");
@@ -548,6 +560,11 @@
     output.monthlySalesHint.textContent = monthlySalesHint(result);
     output.monthlyPremium.textContent = necessaryMonthlyValueLabel(result);
     output.recurring.textContent = formatCurrency(result.recurringAtEnd);
+
+    const mobile = mobileSummaryValues(result);
+    output.mobileSales.textContent = mobile.sales;
+    output.mobileHint.textContent = mobile.hint;
+    output.mobileValue.textContent = mobile.value;
 
     output.lineCards.textContent = "";
     result.lines.forEach((line) => output.lineCards.appendChild(makeLineCard(line)));

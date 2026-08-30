@@ -76,8 +76,29 @@ test('explains monthly sales as quantity times typed value', () => {
     practicalMonthlyPremium: line.practicalMonthlyPremium
   };
 
-  assert.equal(simulator.monthlySalesHint(result), '31 de R$ 250,00 por mes');
+  assert.equal(simulator.monthlySalesHint(result), '31 de R$ 250,00 por mês');
   assert.equal(simulator.necessaryMonthlyValueLabel(result), 'R$ 7.750,00');
+});
+
+test('builds a compact mobile summary so the result stays visible while scrolling', () => {
+  const line = simulator.calculateScenario({
+    targetMonthly: 100000,
+    years: 5,
+    ticket: 250,
+    policy: { label: 'Individual', firstPct: 1.5, recurringPct: 0.22 }
+  });
+  const result = {
+    lines: [line],
+    monthlySales: line.monthlySales,
+    monthlySalesGoal: line.monthlySalesGoal,
+    practicalMonthlyPremium: line.practicalMonthlyPremium
+  };
+
+  assert.deepEqual(simulator.mobileSummaryValues(result), {
+    sales: '31 vendas',
+    hint: '31 de R$ 250,00 por mês',
+    value: 'R$ 7.750,00'
+  });
 });
 
 test('calculates recurring wallet without adding upfront commission', () => {
@@ -108,7 +129,7 @@ test('splits mixed scenario target equally across the three lines', () => {
     policies: {
       individual: { label: 'Individual', firstPct: 1.5, recurringPct: 0.22 },
       nivelado: { label: '20 - B', firstPct: 1, recurringPct: 0.2 },
-      empresarial: { label: 'Opcao 1', firstPct: 1.25, recurringPct: 0.4 }
+      empresarial: { label: 'Opção 1', firstPct: 1.25, recurringPct: 0.4 }
     }
   });
 
